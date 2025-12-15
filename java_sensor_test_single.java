@@ -2,11 +2,9 @@ public class java_sensor_test_single {
     private static final int TASK_LENGTH = 5000000;
     private static final int NUM_SENSORS = 1326;
 
-    private static final Object mutex = new Object();
     private static int completed = 0;
 
-    static class SensorTask implements Runnable {
-        @Override
+    static class SensorTask {
         public void run() {
             double x = 1.0;
 
@@ -14,25 +12,17 @@ public class java_sensor_test_single {
                 x = x * 1.5 + 1.0;
             }
 
-            synchronized (mutex) {
-                completed++;
-            }
+            completed++;
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Thread[] threads = new Thread[NUM_SENSORS];
 
         long startTime = System.nanoTime();
 
         SensorTask task = new SensorTask();
         for (int i = 0; i < NUM_SENSORS; i++) {
-            threads[i] = new Thread(task);
-            threads[i].start();
-        }
-
-        for (int i = 0; i < NUM_SENSORS; i++) {
-            threads[i].join();
+            task.run();
         }
 
         long endTime = System.nanoTime();
