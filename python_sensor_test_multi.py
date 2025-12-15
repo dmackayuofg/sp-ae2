@@ -1,7 +1,7 @@
 import threading
 import time
 
-TASK_LENGTH = 10000000
+TASK_LENGTH = 1000
 completed = 0
 lock = threading.Lock()
 
@@ -15,11 +15,11 @@ def sensor_task():
     with lock:
         completed += 1
 
-n = 1326
+NUM_SENSORS = 1326
 threads = []
 start = time.time()
 
-for i in range(n):
+for i in range(NUM_SENSORS):
     thread = threading.Thread(target=sensor_task)
     threads.append(thread)
     thread.start()
@@ -29,6 +29,6 @@ for thread in threads:
 
 end = time.time()
 
-print(f"Sensors: {n}")
+print(f"Sensors: {NUM_SENSORS}")
 print(f"Completed: {completed}")
-print(f"Time: {end-start}s")
+print(f"Time: {(end-start):.9f}s")

@@ -4,7 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define TASK_LENGTH 10000000
+#define TASK_LENGTH 1000
 
 pthread_mutex_t lock;
 int completed = 0;
@@ -43,26 +43,26 @@ void sub_timespec(struct timespec t1, struct timespec t2, struct timespec *td)
 
 int main() {
 
-    int n = 1326;
-    pthread_t threads[n];
+    int NUM_SENSORS = 1326;
+    pthread_t threads[NUM_SENSORS];
 
     pthread_mutex_init(&lock, NULL);
 
     struct timespec start, finish, delta;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < NUM_SENSORS; i++) {
         pthread_create(&threads[i], NULL, sensor_task, NULL);
     }
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < NUM_SENSORS; i++) {
         pthread_join(threads[i], NULL);
     }
 
     clock_gettime(CLOCK_MONOTONIC, &finish);
     sub_timespec(start, finish, &delta);
 
-    printf("Sensors: %d\n", n);
+    printf("Sensors: %d\n", NUM_SENSORS);
     printf("Completed: %d\n", completed);
     printf("Time: %d.%.9lds\n", (int)delta.tv_sec, delta.tv_nsec);
 

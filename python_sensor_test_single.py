@@ -12,14 +12,14 @@ def sensor_task():
 
     completed += 1
 
-n = 1326
+NUM_SENSORS = 1326
 start = time.time()
 
-for i in range(n):
+for i in range(NUM_SENSORS):
     sensor_task()
 
 end = time.time()
 
-print(f"Sensors: {n}")
+print(f"Sensors: {NUM_SENSORS}")
 print(f"Completed: {completed}")
-print(f"Time: {end-start}s")
+print(f"Time: {(end-start):.9f}s")

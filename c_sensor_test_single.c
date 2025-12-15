@@ -39,19 +39,19 @@ void sub_timespec(struct timespec t1, struct timespec t2, struct timespec *td)
 
 int main() {
 
-    int n = 1326;
+    int NUM_SENSORS = 1326;
 
     struct timespec start, finish, delta;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < NUM_SENSORS; i++) {
         sensor_task();
     }
 
     clock_gettime(CLOCK_MONOTONIC, &finish);
     sub_timespec(start, finish, &delta);
 
-    printf("Sensors: %d\n", n);
+    printf("Sensors: %d\n", NUM_SENSORS);
     printf("Completed: %d\n", completed);
     printf("Time: %d.%.9lds\n", (int)delta.tv_sec, delta.tv_nsec);
 

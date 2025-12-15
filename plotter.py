@@ -24,13 +24,17 @@ colors = {
     'python_multi': 'red'
 }
 
-# Plot each combination
+# Plot each combination with title case labels
 for lang in df['language'].unique():
     for thread in df['threading'].unique():
         subset = df[(df['language'] == lang) & (df['threading'] == thread)]
         key = f"{lang}_{thread}" if lang == 'python' else lang
+        if lang == 'python':
+            label = f"{lang} {thread}".replace('_', ' ').title()  # Python Single / Python Multi
+        else:
+            label = lang.title()  # C / Java
         plt.plot(subset['size'], subset['time (s)'], 
-                 marker=markers[thread], color=colors[key], label=f"{lang} {thread}" if lang == 'python' else lang)
+                 marker=markers[thread], color=colors[key], label=label)
 
 # Logarithmic scale for both axes
 plt.xscale('log')
@@ -41,14 +45,19 @@ plt.xlabel("Number of Steps (log scale)")
 plt.ylabel("Execution Time (s, log scale)")
 plt.title("Execution Time Comparison: C, Java, Python (Single vs Multi-threaded)")
 
-# Update x-axis ticks to include the new step size
+# Update x-axis ticks
 plt.xticks([1000, 10000, 100000, 1000000, 10000000],
            ['1,000', '10,000', '100,000', '1,000,000', '10,000,000'])
 
-# Simplified legend
+# Simplify legend
 handles, labels = plt.gca().get_legend_handles_labels()
 by_label = dict(zip(labels, handles))
 plt.legend(by_label.values(), by_label.keys())
 
 plt.grid(True, which="both", ls="--", lw=0.5)
+
+# Save the figure as a PNG
+plt.savefig("execution_time_comparison.png", dpi=300, bbox_inches='tight')
+
+# Show the plot
 plt.show()
