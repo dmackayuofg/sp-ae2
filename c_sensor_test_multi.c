@@ -4,7 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define TASK_LENGTH 5000000
+#define TASK_LENGTH 10000000
 
 pthread_mutex_t lock;
 int completed = 0;

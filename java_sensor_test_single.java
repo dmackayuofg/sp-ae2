@@ -1,5 +1,5 @@
 public class java_sensor_test_single {
-    private static final int TASK_LENGTH = 5000000;
+    private static final int TASK_LENGTH = 10000000;
     private static final int NUM_SENSORS = 1326;
 
     private static int completed = 0;
@@ -18,9 +18,9 @@ public class java_sensor_test_single {
 
     public static void main(String[] args) throws InterruptedException {
 
-        long startTime = System.nanoTime();
-
         SensorTask task = new SensorTask();
+        
+        long startTime = System.nanoTime();
         for (int i = 0; i < NUM_SENSORS; i++) {
             task.run();
         }

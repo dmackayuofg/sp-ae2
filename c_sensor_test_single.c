@@ -3,7 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define TASK_LENGTH 500000
+#define TASK_LENGTH 10000000
 
 int completed = 0;
 

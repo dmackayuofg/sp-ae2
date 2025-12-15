@@ -1,7 +1,7 @@
 import threading
 import time
 
-TASK_LENGTH = 500000
+TASK_LENGTH = 10000000
 completed = 0
 lock = threading.Lock()
 

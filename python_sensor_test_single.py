@@ -1,6 +1,6 @@
 import time
 
-TASK_LENGTH = 500000
+TASK_LENGTH = 10000000
 completed = 0
 
 def sensor_task():
@@ -13,7 +13,6 @@ def sensor_task():
     completed += 1
 
 n = 1326
-threads = []
 start = time.time()
 
 for i in range(n):
