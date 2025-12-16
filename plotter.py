@@ -9,8 +9,8 @@ df[['language', 'threading', 'size']] = df['dataset'].str.split('_', expand=True
 df['size'] = df['size'].astype(int)
 df['time (s)'] = df['time (s)'].astype(float)
 
-# Filter out c_single and java_single
-df = df[~((df['language'].isin(['c', 'java'])) & (df['threading'] == 'single'))]
+# Filter out single
+df = df[~((df['language'].isin(['c', 'java','python'])) & (df['threading'] == 'single'))]
 
 # Set up the plot
 plt.figure(figsize=(10, 6))
@@ -20,19 +20,16 @@ markers = {'single': 'o', 'multi': 's'}
 colors = {
     'c': 'blue', 
     'java': 'green', 
-    'python_single': 'orange', 
-    'python_multi': 'red'
+    'python': 'orange',
 }
 
 # Plot each combination with title case labels
 for lang in df['language'].unique():
     for thread in df['threading'].unique():
         subset = df[(df['language'] == lang) & (df['threading'] == thread)]
-        key = f"{lang}_{thread}" if lang == 'python' else lang
-        if lang == 'python':
-            label = f"{lang} {thread}".replace('_', ' ').title()  # Python Single / Python Multi
-        else:
-            label = lang.title()  # C / Java
+        #key = f"{lang}_{thread}"  if lang == 'python' else lang
+        key = lang
+        label = lang.title()
         plt.plot(subset['size'], subset['time (s)'], 
                  marker=markers[thread], color=colors[key], label=label)
 
@@ -41,13 +38,13 @@ plt.xscale('log')
 plt.yscale('log')
 
 # Labels, title, legend
-plt.xlabel("Number of Steps (log scale)")
+plt.xlabel("Computation Size (log scale)")
 plt.ylabel("Execution Time (s, log scale)")
-plt.title("Execution Time Comparison: C, Java, Python (Single vs Multi-threaded)")
+plt.title("Execution Time Comparison: C, Java, Python")
 
 # Update x-axis ticks
-plt.xticks([1000, 10000, 100000, 1000000, 10000000],
-           ['1,000', '10,000', '100,000', '1,000,000', '10,000,000'])
+#plt.xticks([1000, 10000, 100000, 1000000, 10000000],
+#           ['1,000', '10,000', '100,000', '1,000,000', '10,000,000'])
 
 # Simplify legend
 handles, labels = plt.gca().get_legend_handles_labels()
